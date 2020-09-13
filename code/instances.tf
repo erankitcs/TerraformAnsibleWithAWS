@@ -34,13 +34,10 @@ resource "aws_instance" "jenkins_master" {
   vpc_security_group_ids      = [aws_security_group.jenkins-sg.id]
   subnet_id                   = aws_subnet.subnet_master1.id
   provisioner "local-exec" {
-    command = <<EOF
-aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-master} --instance-ids ${self.id}
-ansible-playbook --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name}' ansible_templates/install_jenkins.yaml
-EOF
+    command = "aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-master} --instance-ids ${self.id};AWS_PROFILE=${var.profile} ansible-playbook -vvvvv --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name}' ansible_templates/install_jenkins.yaml"
   }
   tags = {
-    Name = "jenkins-master-tf"
+    Name = "jenkins_master_tf"
   }
   depends_on = [aws_main_route_table_association.set-mastervpc-rt]
 }
@@ -60,9 +57,6 @@ resource "aws_instance" "jenkins-workers" {
   }
   depends_on = [aws_main_route_table_association.set-workervpc-rt, aws_instance.jenkins_master]
   provisioner "local-exec" {
-    command = <<EOF
-aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-worker} --instance-ids ${self.id}\
-&& ansible-playbook --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name} master_ip=${aws_instance.jenkins_master.private_ip}' ansible_templates/install_worker.yaml
-EOF
+    command = "aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-worker} --instance-ids ${self.id};AWS_PROFILE=${var.profile} ansible-playbook -vvvvv --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name} master_ip=${aws_instance.jenkins_master.private_ip}' ansible_templates/install_worker.yaml"
   }
 }

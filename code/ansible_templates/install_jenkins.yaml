@@ -14,7 +14,7 @@
         name: httpd
         state: present
     - name: start and enable Apache
-      yum:
+      service:
         name: httpd
         state: started
         enabled: yes

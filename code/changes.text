@@ -1,0 +1,13 @@
+--> HTTPS setup
+
+--> Actual Jenkins deployment
+
+----URLs
+https://www.ansible.com/blog/dynamic-inventory-past-present-future
+https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html
+https://medium.com/faun/learning-the-ansible-aws-ec2-dynamic-inventory-plugin-59dd6a929c7f
+https://docs.ansible.com/ansible/latest/plugins/connection/ssh.html
+https://www.cyberciti.biz/faq/define-ssh-key-per-host-using-ansible_ssh_private_key_file/
+https://serverfault.com/questions/758440/how-to-remember-cache-or-specify-private-key-passphrase-for-ansible
+https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html
+https://tutorials.releaseworksacademy.com/learn/using-ansible-with-terraform

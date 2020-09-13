@@ -8,4 +8,4 @@ cd /mnt/c
 ##change to drive D of windows
 cd /mnt/d
 
-export ANSIBLE_CONFIG=/mnt/d/Tech/AWSLearning/TerraformAnsibleWithAWS/code/ansible.cfg      
+export ANSIBLE_CONFIG=/mnt/d/Tech/AWSLearning/TerraformAnsibleWithAWS/code/ansible.cfg

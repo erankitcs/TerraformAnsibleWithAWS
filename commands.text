@@ -7,3 +7,21 @@ terraform validate
 terraform plan
 
 terraform apply
+
+-----------------------
+Ansible commands:
+AWS_PROFILE=terraformuser ansible-inventory -i tf_aws_ec2.yml --graph
+AWS_PROFILE=terraformuser ansible-playbook --vvvv --extra-vars 'passed_in_hosts=tag_Name_jenkins-master-tf' ansible_templates/install_jenkins.yaml
+
+AWS_PROFILE=terraformuser ANSIBLE_PRIVATE_KEY_FILE=/home/ankit/jenkins.pem ansible-playbook --extra-vars 'passed_in_hosts=tag_Name_jenkins_master_tf' ansible_templates/install_jenkins.yaml
+
+eval `ssh-agent`  # you might have agent already running so this might not be needed
+$ ssh-add /home/ankit/jenkins.pem
+
+AWS_PROFILE=terraformuser ansible-playbook --vvvv --extra-vars 'passed_in_hosts=tag_Name_jenkins_master_tf' ansible_templates/install_jenkins.yaml
+
+AWS_PROFILE=terraformuser  ansible-playbook -vvvv --extra-vars 'passed_in_hosts=tag_Name_jenkins_master_tf' install_jenkins.yaml
+
+export ANSIBLE_PLAYBOOK_DIR=/home/ankit/data/code/ansible_templates
+
+ export ANS_CODE=/home/ankit/data/code/ansible_templates
