@@ -11,3 +11,21 @@ https://www.cyberciti.biz/faq/define-ssh-key-per-host-using-ansible_ssh_private_
 https://serverfault.com/questions/758440/how-to-remember-cache-or-specify-private-key-passphrase-for-ansible
 https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html
 https://tutorials.releaseworksacademy.com/learn/using-ansible-with-terraform
+
+
+ankit@Rishu-Dell:~$ aws route53 list-hosted-zones --profile=terraformuser
+{
+    "HostedZones": [
+        {
+            "Id": "/hostedzone/Z217PNWXUZC3KM",
+            "Name": "techenvision.net.",
+            "CallerReference": "RISWorkflow-RD:d33eb8a1-a6be-41e7-9a7c-a038d6a5ca93",
+            "Config": {
+                "Comment": "HostedZone created by Route53 Registrar",
+                "PrivateZone": false
+            },
+            "ResourceRecordSetCount": 4
+        }
+    ]
+}
+

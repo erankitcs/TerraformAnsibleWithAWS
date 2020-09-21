@@ -8,6 +8,26 @@ terraform plan
 
 terraform apply
 
+terraform output
+
+terraform output LB-DNS-NAME
+
+terraform state list
+
+terraform console
+
+> aws_instance.jenkins_master
+you can test terraform function here.
+
+terraform graph > tf.dot
+
+sudo apt install graphviz
+
+cat tf.dot | dot -Tpng -otf.png
+
+ansible-playbook --syntax-check sample.yml
+
+
 -----------------------
 Ansible commands:
 AWS_PROFILE=terraformuser ansible-inventory -i tf_aws_ec2.yml --graph
@@ -24,4 +44,4 @@ AWS_PROFILE=terraformuser  ansible-playbook -vvvv --extra-vars 'passed_in_hosts=
 
 export ANSIBLE_PLAYBOOK_DIR=/home/ankit/data/code/ansible_templates
 
- export ANS_CODE=/home/ankit/data/code/ansible_templates
+export ANS_CODE=/home/ankit/data/code/ansible_templates

@@ -9,3 +9,7 @@ cd /mnt/c
 cd /mnt/d
 
 export ANSIBLE_CONFIG=/mnt/d/Tech/AWSLearning/TerraformAnsibleWithAWS/code/ansible.cfg
+
+# Handle pem passphrase
+eval `ssh-agent`
+ssh-add /home/ankit/jenkins.pem
