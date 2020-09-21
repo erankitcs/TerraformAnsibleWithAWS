@@ -34,7 +34,7 @@ resource "aws_instance" "jenkins_master" {
   vpc_security_group_ids      = [aws_security_group.jenkins-sg.id]
   subnet_id                   = aws_subnet.subnet_master1.id
   provisioner "local-exec" {
-    command = "aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-master} --instance-ids ${self.id};AWS_PROFILE=${var.profile} ansible-playbook -vvvvv --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name}' ansible_templates/install_jenkins.yaml"
+    command = "aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-master} --instance-ids ${self.id};AWS_PROFILE=${var.profile} ansible-playbook -vvvvv --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name}' ansible_templates/install_jenkins_master.yml"
   }
   tags = {
     Name = "jenkins_master_tf"
@@ -57,6 +57,30 @@ resource "aws_instance" "jenkins-workers" {
   }
   depends_on = [aws_main_route_table_association.set-workervpc-rt, aws_instance.jenkins_master]
   provisioner "local-exec" {
-    command = "aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-worker} --instance-ids ${self.id};AWS_PROFILE=${var.profile} ansible-playbook -vvvvv --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name} master_ip=${aws_instance.jenkins_master.private_ip}' ansible_templates/install_worker.yaml"
+    command = "aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-worker} --instance-ids ${self.id};AWS_PROFILE=${var.profile} ansible-playbook -vvvvv --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name} master_ip=${aws_instance.jenkins_master.private_ip}' ansible_templates/install_jenkins_worker.yml"
   }
 }
+
+resource "null_resource" "jenkins-workers" {
+  count = "${var.workers-count}"
+  triggers = {
+    master_private_ip = aws_instance.jenkins_master.private_ip
+    worker_private_ip = "${element(aws_instance.jenkins-workers.*.private_ip, count.index)}"
+    instance_number = "${count.index + 1}"
+  }
+  provisioner "remote-exec" {
+    when = destroy
+    inline = [
+      "java -jar /home/ec2-user/jenkins-cli.jar -auth @/home/ec2-user/jenkins_auth -s http://${self.triggers.master_private_ip}:8080 delete-node ${self.triggers.worker_private_ip}"
+    ]
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = file("/mnt/c/Users/Rishu/.ssh/jenkins.pub")
+      host        = self.triggers.worker_private_ip
+    }
+
+  }
+
+}
+
