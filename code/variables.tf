@@ -31,7 +31,7 @@ variable "workers-count" {
 #Add the variable webserver-port to variables.tf
 variable "webserver-port" {
   type    = number
-  default = 80
+  default = 8080
 }
 
 variable "dns-name" {

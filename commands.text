@@ -27,7 +27,7 @@ cat tf.dot | dot -Tpng -otf.png
 
 ansible-playbook --syntax-check sample.yml
 
-
+openssl rsa -in /mnt/c/Users/Rishu/.ssh/jenkins.pem -out /mnt/c/Users/Rishu/.ssh/jenkins_decripted.pem                                                                       
 -----------------------
 Ansible commands:
 AWS_PROFILE=terraformuser ansible-inventory -i tf_aws_ec2.yml --graph

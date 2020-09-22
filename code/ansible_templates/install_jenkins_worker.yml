@@ -1,8 +1,7 @@
 ---
-- hosts: " {{ passed_in_hosts}} "
+- hosts: "{{ passed_in_hosts }}"
   become: yes
-  remote-user: ec2-user
-  become-user: root
+  remote_user: ec2-user
   tasks:
     - name: Generate SSH Keypair
       openssh_keypair:
@@ -31,8 +30,8 @@
         priv_key: "{{ pkey['content'] | b64decode }}"
         ipv4: "{{ ansible_default_ipv4.address }}"
       template:
-        src: cre-privkey.j2
-        dest: /home/ec2-user/cred.xml
+        src: cred-privkey.j2
+        dest: /home/ec2-user/creds.xml
     
     - name: install dependencies
       yum: 
