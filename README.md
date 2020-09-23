@@ -3,12 +3,12 @@ This projected aimed to practice Terraform and Ansible in AWS. We would be creat
 
 ## Steps to install
 
-1: Run terraform_install.sh to install terraform
-2: Run install-ansible.sh to install Ansible
-3: Update S3 bucket and AWS  Profile in backend.tf
-4: Update profile and DNS in variabled.tf
-5: Update public_key location for both master_keypair and worker_keypair inside instances.tf
-6: Run Terraform commands
+1. Run terraform_install.sh to install terraform
+2. Run install-ansible.sh to install Ansible
+3. Update S3 bucket and AWS  Profile in backend.tf
+4. Update profile and DNS in variabled.tf
+5. Update public_key location for both master_keypair and worker_keypair inside instances.tf
+6. Run Terraform commands
 - cd codo/
 - terraform init
 - terroform plan
