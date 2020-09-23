@@ -79,7 +79,7 @@ resource "null_resource" "jenkins-workers" {
       user        = "ec2-user"
       #private_key = file("/mnt/c/Users/Rishu/.ssh/jenkins_decripted.pem")
       agent = true
-      host        = "34.209.179.141"
+      host        = self.triggers.worker_public_ip
     }
 
   }

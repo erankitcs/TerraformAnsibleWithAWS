@@ -1,3 +1,5 @@
+
+############################## Terraform commands
 terraform init
 
 terraform fmt
@@ -27,16 +29,15 @@ cat tf.dot | dot -Tpng -otf.png
 
 ansible-playbook --syntax-check sample.yml
 
+######################### Descrypted pem file incase required to avoid pass phrase
 openssl rsa -in /mnt/c/Users/Rishu/.ssh/jenkins.pem -out /mnt/c/Users/Rishu/.ssh/jenkins_decripted.pem                                                                       
------------------------
-Ansible commands:
+
+
+###########################################Ansible commands:
 AWS_PROFILE=terraformuser ansible-inventory -i tf_aws_ec2.yml --graph
 AWS_PROFILE=terraformuser ansible-playbook --vvvv --extra-vars 'passed_in_hosts=tag_Name_jenkins-master-tf' ansible_templates/install_jenkins.yaml
 
 AWS_PROFILE=terraformuser ANSIBLE_PRIVATE_KEY_FILE=/home/ankit/jenkins.pem ansible-playbook --extra-vars 'passed_in_hosts=tag_Name_jenkins_master_tf' ansible_templates/install_jenkins.yaml
-
-eval `ssh-agent`  # you might have agent already running so this might not be needed
-$ ssh-add /home/ankit/jenkins.pem
 
 AWS_PROFILE=terraformuser ansible-playbook --vvvv --extra-vars 'passed_in_hosts=tag_Name_jenkins_master_tf' ansible_templates/install_jenkins.yaml
 
@@ -45,3 +46,33 @@ AWS_PROFILE=terraformuser  ansible-playbook -vvvv --extra-vars 'passed_in_hosts=
 export ANSIBLE_PLAYBOOK_DIR=/home/ankit/data/code/ansible_templates
 
 export ANS_CODE=/home/ankit/data/code/ansible_templates
+
+############################################# For Hosted zone details.
+
+aws route53 list-hosted-zones --profile=terraformuser
+
+############################################# Windows Ubantu setting 
+
+##change to drive C of windows
+cd /mnt/c
+##change to drive D of windows
+cd /mnt/d
+
+export ANSIBLE_CONFIG=/mnt/d/Tech/AWSLearning/TerraformAnsibleWithAWS/code/ansible.cfg
+
+# Handle pem passphrase
+eval `ssh-agent`
+ssh-add /home/ankit/jenkins.pem
+
+
+############################################## Helpful URL
+
+https://www.ansible.com/blog/dynamic-inventory-past-present-future
+https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html
+https://medium.com/faun/learning-the-ansible-aws-ec2-dynamic-inventory-plugin-59dd6a929c7f
+https://docs.ansible.com/ansible/latest/plugins/connection/ssh.html
+https://www.cyberciti.biz/faq/define-ssh-key-per-host-using-ansible_ssh_private_key_file/
+https://serverfault.com/questions/758440/how-to-remember-cache-or-specify-private-key-passphrase-for-ansible
+https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html
+https://tutorials.releaseworksacademy.com/learn/using-ansible-with-terraform
+
