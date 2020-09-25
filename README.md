@@ -22,5 +22,7 @@ This projected aimed to practice Terraform and Ansible in AWS. We would be creat
 
 ## Architecture
 
+![Screenshot](Architecture.JPG)
+Thanks to A Cloud Guru for diagram.
 ## Demo 
 ![Screenshot](AWSTerrraformAndAnsible.gif)
